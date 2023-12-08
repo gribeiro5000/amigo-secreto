@@ -4,7 +4,7 @@
   "description": "``` https://github.com/gribeiro5000/amigo-secreto.git ```",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon ./Service/server.js"
   },
   "repository": {
     "type": "git",
