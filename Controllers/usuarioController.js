@@ -10,7 +10,7 @@ class UsuarioController {
     }
 
     async readOne(req, res) {
-        const rows = await UsuarioRepositorio.getOne(req, res)
+        const rows = await UsuarioRepositorio.getOne(req.params.id)
         if(rows){
             res.status(200).send(rows)
         }else{
@@ -19,25 +19,22 @@ class UsuarioController {
     }
 
     async insert(req, res){
-        const rows = await UsuarioRepositorio.createUser(req, res)
+        const rows = await UsuarioRepositorio.createUser(req.body)
 
         if(rows){
             res.status(200).send(rows)
         }else{
-            res.status(404).send("Erro! os verifique os campos: nome, email e senha")
+            res.status(404).send("Erro! verifique os campos: nome, email e senha")
         } 
     }
 
     async update(req, res){
-        const rows = await usuarioRepositorio.updateUser(req, res)
+        await usuarioRepositorio.updateUser(req.body, req.params.id)
         res.status(404).send("Usuario atualizado com sucesso!")
     }
 
     async delete(req, res){
-        const rows = await usuarioRepositorio.deleteUser(req, res)
-
-        console.log("Valor de rows:", rows);
-
+        const rows = await usuarioRepositorio.deleteUser(req.params.id)
         if (rows) {
             res.status(200).send("Usuário deletado com sucesso");
         } else {

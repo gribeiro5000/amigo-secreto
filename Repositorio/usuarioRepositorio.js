@@ -11,8 +11,7 @@ class UsuarioRepositorio {
         return response
     }
 
-    getOne(req, res) {
-        let id = req.params.id
+    getOne(id) {
         const response = usuario.findOne({where: { id: id }}).then(data =>{
             return data
         }).catch(err =>{
@@ -22,12 +21,12 @@ class UsuarioRepositorio {
         return response
     }
 
-    createUser(req, res){
+    createUser(body){
         let novo_usuario = {
-            nome: req.body.nome,
-            email: req.body.email,
-            senha: req.body.senha,
-            celular: req.body.celular,
+            nome: body.nome,
+            email: body.email,
+            senha: body.senha,
+            celular: body.celular,
         }
 
         const response = usuario.create(novo_usuario).then(data =>{
@@ -39,14 +38,12 @@ class UsuarioRepositorio {
         return response
     }
 
-    updateUser(req, res){
-        let id = req.params.id
-
+    updateUser(data, id){
         let updatedUsuario = {
-            nome: req.body.nome,
-            email: req.body.email,
-            senha: req.body.senha,
-            celular: req.body.celular,
+            nome: data.nome,
+            email: data.email,
+            senha: data.senha,
+            celular: data.celular,
         };
 
         const response = usuario.update(updatedUsuario, {where: { id: id }}).then(data =>{
@@ -55,11 +52,10 @@ class UsuarioRepositorio {
             console.log(err)
         })
 
+        return response
     }
 
-    deleteUser(req, res){
-        let id = req.params.id
-
+    deleteUser(id){
         const response = usuario.destroy({where: {id: id}}).then(data =>{
             return data
         }).catch(err =>{
@@ -67,7 +63,6 @@ class UsuarioRepositorio {
         })
         return response
     }
-    
     }
 
 
