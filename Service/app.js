@@ -3,14 +3,18 @@ const app = express()
 const createDatabase = require('../Database/create.js')
 const modelSync = require('../Models/modelSync.js')
 const router = require('../Routes/routes.js')
+const grupoRouter = require('../Routes/grupoRouter.js')
 const listaDeDesejosRouter = require('../Routes/listaDeDesejosRoutes.js')
 
 
 app.use(express.json())
-createDatabase()
-modelSync()
+
+createDatabase().then(() => {
+    modelSync()
+})
 
 app.use(router)
+app.use(grupoRouter)
 app.use(listaDeDesejosRouter)
 
 
