@@ -9,7 +9,7 @@ async function createDatabase(){
     })
 
     //cria banco de dados 
-    await connection.execute("create database if not exists amigoSecreto")
+    await connection.execute("CREATE DATABASE IF NOT EXISTS amigoSecreto")
 
     connection.end()
 }
