@@ -1,3 +1,4 @@
+const { default: Api500Error } = require('../Error_Handler/Api500Error.js')
 const usuario = require('../Models/usuario.js')
 
 class UsuarioRepositorio {
@@ -5,9 +6,8 @@ class UsuarioRepositorio {
         const response = usuario.findAll().then(data =>{
             return data
         }).catch(err =>{
-            console.log(err)
+            throw new Api500Error(err)
         })
-        
         return response
     }
 
@@ -15,7 +15,7 @@ class UsuarioRepositorio {
         const response = usuario.findOne({where: { id: id }}).then(data =>{
             return data
         }).catch(err =>{
-            console.log(err)
+            throw new Api500Error(err)
         })
 
         return response
@@ -32,7 +32,7 @@ class UsuarioRepositorio {
         const response = usuario.create(novo_usuario).then(data =>{
             return data
         }).catch(err =>{
-            console.log(err)
+            throw new Api500Error(err)
         })
 
         return response
@@ -49,7 +49,7 @@ class UsuarioRepositorio {
         const response = usuario.update(updatedUsuario, {where: { id: id }}).then(data =>{
             return data
         }).catch(err =>{
-            console.log(err)
+            throw new Api500Error(err)
         })
 
         return response
@@ -59,7 +59,7 @@ class UsuarioRepositorio {
         const response = usuario.destroy({where: {id: id}}).then(data =>{
             return data
         }).catch(err =>{
-            console.log(err)
+            throw new Api500Error(err)
         })
         return response
     }

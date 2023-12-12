@@ -1,46 +1,69 @@
 const UsuarioRepositorio = require('../Repositorio/usuarioRepositorio.js')
 const usuario = require('../Models/usuario.js');
 const usuarioRepositorio = require('../Repositorio/usuarioRepositorio.js');
+const Api404Error = require('../Error_Handler/API404Error.js');
 
 class UsuarioController {
 
-    async readAll(req, res){
-        const rows = await UsuarioRepositorio.getAll()
-        res.status(200).send(rows)
+    async readAll(req, res, next){
+        try {
+            const rows = await UsuarioRepositorio.getAll()
+            if(rows){
+                res.status(200).send(rows)   
+            } else {
+                throw new Api404Error('usuários não encontrado')
+            }
+        }catch(error) {
+            next(error)
+        }
     }
 
-    async readOne(req, res) {
-        const rows = await UsuarioRepositorio.getOne(req.params.id)
-        if(rows){
-            res.status(200).send(rows)
-        }else{
-            res.status(404).send("não encontrado")
-        }   
-    }
-
-    async insert(req, res){
-        const rows = await UsuarioRepositorio.createUser(req.body)
-
-        if(rows){
-            res.status(200).send(rows)
-        }else{
-            res.status(404).send("Erro! verifique os campos: nome, email e senha")
+    async readOne(req, res, next) {
+        try {
+            const rows = await UsuarioRepositorio.getOne(req.params.id)
+            if(rows){
+                res.status(200).send(rows)
+            }else{
+                throw new Api404Error('Usuário não encontrado')
+            }
+        } catch(error) {
+            next(error)
         } 
     }
 
-    async update(req, res){
-        await usuarioRepositorio.updateUser(req.body, req.params.id)
-        res.status(404).send("Usuario atualizado com sucesso!")
+    async insert(req, res, next){
+        try{
+            const rows = await UsuarioRepositorio.createUser(req.body)
+            res.status(200).send(rows)
+        }catch(error) {
+            next(error)
+        }
     }
 
-    async delete(req, res){
-        const rows = await usuarioRepositorio.deleteUser(req.params.id)
-        if (rows) {
-            res.status(200).send("Usuário deletado com sucesso");
-        } else {
-            res.status(404).send("Erro! Usuário não encontrado");
+    async update(req, res, next){
+        try{
+            const row = await usuarioRepositorio.updateUser(req.body, req.params.id)
+            if(row[0] == 1){
+                res.status(404).send("Usuario atualizado com sucesso!")
+            } else {
+                throw new Api404Error('Usuário não encontrado')
+            }
+        }catch(error) {
+            next(error)
         }
+    }
 
+    async delete(req, res, next){
+        try{
+            const row = await usuarioRepositorio.deleteUser(req.params.id)
+            if (row) {
+                res.status(200).send("Usuário deletado com sucesso");
+            } else {
+                throw new Api404Error('usuário não encontrado')
+            }
+        }catch(error) {
+            next(error)
+        }
     }
 }
 

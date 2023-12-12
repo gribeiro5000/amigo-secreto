@@ -1,6 +1,7 @@
 const express = require('express')
 const usuarioRouter = express.Router()
 const UsuarioController = require('../Controllers/usuarioController.js')
+const returnError = require('../Error_Handler/errorHandler.js')
 
 
 
@@ -10,6 +11,7 @@ usuarioRouter.post("/usuarios", UsuarioController.insert)
 usuarioRouter.put("/usuarios/:id", UsuarioController.update)
 usuarioRouter.delete("/usuarios/:id", UsuarioController.delete)
 
+usuarioRouter.use(returnError)
 
 
 module.exports = usuarioRouter
