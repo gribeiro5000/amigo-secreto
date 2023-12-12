@@ -5,6 +5,7 @@ const modelSync = require('../Models/modelSync.js')
 const usuarioRouter = require('../Routes/usuarioRoutes.js')
 const grupoRouter = require('../Routes/grupoRouter.js')
 const listaDeDesejosRouter = require('../Routes/listaDeDesejosRoutes.js')
+const convidadoRouter = require('../Routes/convidadoRouter.js')
 
 
 app.use(express.json())
@@ -16,6 +17,7 @@ createDatabase().then(() => {
 app.use(usuarioRouter)
 app.use(grupoRouter)
 app.use(listaDeDesejosRouter)
+app.use(convidadoRouter)
 
 
 
