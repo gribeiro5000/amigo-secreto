@@ -1,12 +1,13 @@
 const ListaDeDesejos = require('../Models/listaDeDesejos.js')
+const Api500Error = require('../Error_Handler/Api500Error.js')
 
 class ListaDeDesejosRepositorio {
     getAll() {
         const response = ListaDeDesejos.findAll()
         .then(result => {
             return result
-        }).catch(error => {
-            return error
+        }).catch(err => {
+            throw new Api500Error(err)
         })
         return response
     }
@@ -19,8 +20,8 @@ class ListaDeDesejosRepositorio {
         })
         .then(result => {
             return result
-        }).catch(error => {
-            return error
+        }).catch(err => {
+            throw new Api500Error(err)
         })
         return response
     }
@@ -33,8 +34,8 @@ class ListaDeDesejosRepositorio {
         })
         .then(result => {
             return result
-        }).catch(error => {
-            return error
+        }).catch(err => {
+            throw new Api500Error(err)
         })
         return response
     }
@@ -47,8 +48,8 @@ class ListaDeDesejosRepositorio {
         })
         .then(result => {
             return result
-        }).catch(error => {
-            return error
+        }).catch(err => {
+            throw new Api500Error(err)
         })
         return response
     }
@@ -61,8 +62,8 @@ class ListaDeDesejosRepositorio {
         })
         .then(result => {
             return result
-        }).catch(error => {
-            return error
+        }).catch(err => {
+            throw new Api500Error(err)
         })
         return response
     }
