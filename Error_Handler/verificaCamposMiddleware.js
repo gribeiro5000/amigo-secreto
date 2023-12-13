@@ -1,25 +1,24 @@
+const BaseError = require('../Error_Handler/BaseError.js')
+const httpStatusCode = require('../Error_Handler/httpStatusCode.js')
 const express = require('express')
 const app = express()
 
 const verificaCamposMiddleware = (req, res, next) => {
     const { nome, email, senha } = req.body;
-
-    if (!nome && !email && !senha) {
-        return res.status(400).json({ mensagem: `nome, email e senha são obrigatórios` });
-    }else{
-        if(!nome){
-            return res.status(400).json({ mensagem: `nome é obrigatório` });
+    try{
+        if (!nome || !email || !senha) {
+            throw new BaseError(
+                'bad request', 
+                httpStatusCode.BAD_REQUEST, 
+                true,
+                'nome, email e senha são obrigatórios'
+                )
         }
-        if(!email){
-            return res.status(400).json({ mensagem: `email é obrigatório` });
-        }
-        if(!senha){
-            return res.status(400).json({ mensagem: `senha é obrigatório` });
-        }
-
-        next()
+    }catch(error) {
+        next(error)
     }
-
+        
+    next()
 }
 
 module.exports = verificaCamposMiddleware

@@ -1,14 +1,14 @@
 const UsuarioRepositorio = require('../Repositorio/usuarioRepositorio.js')
 const usuario = require('../Models/usuario.js');
 const usuarioRepositorio = require('../Repositorio/usuarioRepositorio.js');
-const Api404Error = require('../Error_Handler/API404Error.js');
+const Api404Error = require('../Error_Handler/Api404Error.js');
 
 class UsuarioController {
 
     async readAll(req, res, next){
         try {
             const rows = await UsuarioRepositorio.getAll()
-            if(rows){
+            if(rows.length > 0){
                 res.status(200).send(rows)   
             } else {
                 throw new Api404Error('usuários não encontrado')

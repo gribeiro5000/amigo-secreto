@@ -5,8 +5,8 @@ class Api404Error extends BaseError {
     constructor(
         name,
         statusCode = httpStatusCode.NOT_FOUND,
-        description = 'not found',
-        isOperational = true
+        isOperational = true,
+        description = 'não encontrado'
     ){
         super(name, statusCode, isOperational, description)
     }
