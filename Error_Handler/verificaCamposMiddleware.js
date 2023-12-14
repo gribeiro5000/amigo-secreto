@@ -3,16 +3,17 @@ const express = require('express')
 const Api400Error = require('./Api400Error.js')
 const app = express()
 
-const verificaCamposMiddleware = (req, res, next) => {
-    const { nome, email, senha } = req.body;
-    try{
-        if (!nome || !email || !senha) {
-            throw new Api400Error('nome, email e senha são obrigatórios')
+const verificaCamposMiddleware = (...camposObrigatorios) => (req, res, next) => {
+    try {
+        for (const campo of camposObrigatorios) {
+            if (!req.body[campo]) {
+                throw new Api400Error(`${campo} é obrigatório`);
+            }
         }
-    }catch(error) {
-        next(error)
-    }  
-    next()
-}
+    } catch (error) {
+        return next(error);
+    }
+    next();
+};
 
 module.exports = verificaCamposMiddleware

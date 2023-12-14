@@ -8,7 +8,7 @@ const verificaCamposMiddleware = require('../Error_Handler/verificaCamposMiddlew
 
 usuarioRouter.get("/usuarios", UsuarioController.readAll)
 usuarioRouter.get("/usuarios/:id", UsuarioController.readOne)
-usuarioRouter.post("/usuarios", verificaCamposMiddleware, UsuarioController.insert)
+usuarioRouter.post("/usuarios", verificaCamposMiddleware("nome", "email", "senha"), UsuarioController.insert)
 usuarioRouter.put("/usuarios/:id", UsuarioController.update)
 usuarioRouter.delete("/usuarios/:id", UsuarioController.delete)
 
