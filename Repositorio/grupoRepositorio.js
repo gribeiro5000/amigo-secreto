@@ -1,3 +1,4 @@
+const Api500Error = require("../Error_Handler/Api500Error")
 const Grupo = require("../Models/grupos")
 
 class GrupoRepositorio {
@@ -6,7 +7,7 @@ class GrupoRepositorio {
         .then((data) => {
             return data
         }).catch((error) => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -19,7 +20,7 @@ class GrupoRepositorio {
         }).then(data => {
             return data
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -35,7 +36,7 @@ class GrupoRepositorio {
         }).then((response) => {
             return response
         }).catch((error) => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -48,7 +49,7 @@ class GrupoRepositorio {
         }).then(result => {
             return result
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -61,7 +62,7 @@ class GrupoRepositorio {
         }).then(() => {
             return "grupo deletado com sucesso"
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }

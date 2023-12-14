@@ -6,7 +6,7 @@ const app = express()
 const verificaCamposMiddleware = (...camposObrigatorios) => (req, res, next) => {
     try {
         for (const campo of camposObrigatorios) {
-            if (!req.body[campo]) {
+            if (!req.body[campo]) { 
                 throw new Api400Error(`${campo} é obrigatório`);
             }
         }

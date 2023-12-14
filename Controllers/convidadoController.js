@@ -1,4 +1,6 @@
 const convidadoRepositorio = require("../Repositorio/convidadoRepositorio.js")
+const usuarioRepositorio = require('../Repositorio/usuarioRepositorio.js')
+const grupoRepositorio = require('../Repositorio/convidadoRepositorio.js')
 const Api404Error = require("../Error_Handler/Api404Error.js")
 
 class ConvidadoController {

@@ -1,4 +1,8 @@
 const Convidado = require("../Models/convidado.js")
+const usuarioRepositorio = require('../Repositorio/usuarioRepositorio.js')
+const grupoRepositorio = require('../Repositorio/grupoRepositorio.js')
+const Api404Error = require("../Error_Handler/Api404Error.js")
+const Api500Error = require("../Error_Handler/Api500Error.js")
 
 class ConvidadoRepositorio {
     getAll() {
@@ -6,7 +10,7 @@ class ConvidadoRepositorio {
         .then((data) => {
             return data
         }).catch((error) => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -19,7 +23,7 @@ class ConvidadoRepositorio {
         }).then(data => {
             return data
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -29,9 +33,11 @@ class ConvidadoRepositorio {
             UsuarioId: data.UsuarioId,
             GrupoId: data.GrupoId
         }).then((response) => {
+            console.log(response)
             return response
         }).catch((error) => {
-            return error
+            console.log(error.message)
+            throw new Api500Error(error)
         })
         return response
     }
@@ -44,7 +50,7 @@ class ConvidadoRepositorio {
         }).then(result => {
             return result
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
@@ -57,7 +63,7 @@ class ConvidadoRepositorio {
         }).then(() => {
             return "Convidado deletado com sucesso"
         }).catch(error => {
-            return error
+            throw new Api500Error(error)
         })
         return response
     }
