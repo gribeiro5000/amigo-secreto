@@ -1,5 +1,6 @@
 const { default: Api500Error } = require('../Error_Handler/Api500Error.js')
 const usuario = require('../Models/usuario.js')
+const bcrypt = require('bcryptjs')
 
 class UsuarioRepositorio {
     getAll(){
@@ -25,7 +26,7 @@ class UsuarioRepositorio {
         let novo_usuario = {
             nome: body.nome,
             email: body.email,
-            senha: body.senha,
+            senha: bcrypt.hashSync(body.senha),
             celular: body.celular,
         }
 
