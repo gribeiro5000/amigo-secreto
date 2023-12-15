@@ -7,7 +7,7 @@ const grupoRouter = require('../Routes/grupoRouter.js')
 const listaDeDesejosRouter = require('../Routes/listaDeDesejosRoutes.js')
 const convidadoRouter = require('../Routes/convidadoRouter.js')
 const loginRouter = require('../Routes/loginRouter.js')
-const authorization = require('../Controllers/authorizationController.js')
+const authorization = require('../Auth/autenticacao.js')
 
 
 app.use(express.json())
@@ -18,9 +18,9 @@ createDatabase().then(() => {
 
 app.use(loginRouter)
 app.use(usuarioRouter)
-app.use(authorization.logado,grupoRouter)
-app.use(authorization.logado, listaDeDesejosRouter)
-app.use(authorization.logado,convidadoRouter)
+app.use(grupoRouter)
+app.use(listaDeDesejosRouter)
+app.use(convidadoRouter)
 
 
 
