@@ -3,21 +3,23 @@ const Api500Error = require('../Error_Handler/Api500Error')
 require('dotenv').config()
 
 class Auth {
-   async autenticacao(req, res, next){
-    const token = await jwt.verify(req.header('authorization-token'), process.env.TOKEN_SECRET, function(err, decoded){
-        if(err){
-            throw new Api500Error(err)
-        }else {
-            req.id = decoded.id
-        }
-    })
-    if(!token){
-        res.status(401).send("acesso negado: faça login primeiro")
+   autenticacao(req, res, next){
+    const token = req.header('authorization-token')
+    if(token){
+        jwt.verify(token, process.env.TOKEN_SECRET, function(err, decoded){
+            if(err){
+                throw new Api500Error(err)
+            }else {
+                req.id = decoded.id
+            }
+        })
+    } else {
+        res.status(401).send("acesso negado: Faça login primeiro")
     }
     next()
     }
 
-    async permissao(req, res, next){
+    permissao(req, res, next){
         if(req.id == req.params.id){
             next()
         }else{
