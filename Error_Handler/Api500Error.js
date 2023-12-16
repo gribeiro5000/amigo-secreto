@@ -5,8 +5,9 @@ class Api500Error extends BaseError {
     constructor (
         name,
         statusCode = httpStatusCode.INTERNAL_SERVER,
-        description = "Internal Server Error",
-        isOperational = true
+        isOperational = true,
+        description = "Internal Server Error"
+        
     ) {
         super(name, statusCode, isOperational, description)
     }

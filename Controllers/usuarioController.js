@@ -1,5 +1,9 @@
 const UsuarioRepositorio = require('../Repositorio/usuarioRepositorio.js')
 const Api404Error = require('../Error_Handler/Api404Error.js');
+const bcrypt = require('bcryptjs');
+const Api401Error = require('../Error_Handler/Api401Error.js');
+const jwt = require('jsonwebtoken');
+const httpStatusCode = require('../Error_Handler/httpStatusCode.js');
 
 class UsuarioController {
 
@@ -31,6 +35,7 @@ class UsuarioController {
 
     async insert(req, res, next){
         try{
+            req.body.senha = bcrypt.hashSync(req.body.senha)
             const rows = await UsuarioRepositorio.createUser(req.body)
             res.status(200).send(rows)
         }catch(error) {
@@ -62,6 +67,31 @@ class UsuarioController {
         }catch(error) {
             next(error)
         }
+    }
+
+    async login(req, res, next) {
+        try{
+            let veriEmail = await UsuarioRepositorio.getByEmail(req.body.email)
+  
+            if(veriEmail){
+                let senha = await bcrypt.compare(req.body.senha, veriEmail.senha)
+            if(!senha){
+                throw new Api401Error("email ou senha inválidos")
+            }else {
+                let token = jwt.sign({id: veriEmail.id}, process.env.TOKEN_SECRET, {expiresIn: '1h'})
+                res.status(200).header({"authorization-token": token, "id": veriEmail.id}).send("logado")
+            }
+          }else{
+            throw new Api401Error("email ou senha inválidos")
+          }   
+        }
+        catch(error) {
+            next(error)
+        }
+    }
+
+    async logout() {
+
     }
 }
 
