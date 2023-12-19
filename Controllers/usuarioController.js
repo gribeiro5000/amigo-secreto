@@ -45,6 +45,7 @@ class UsuarioController {
 
     async update(req, res, next){
         try{
+            req.body.senha = bcrypt.hashSync(req.body.senha)
             const row = await UsuarioRepositorio.updateUser(req.body, req.params.id)
             if(row[0] == 1){
                 res.status(404).send("Usuario atualizado com sucesso!")
