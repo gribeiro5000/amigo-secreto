@@ -1,5 +1,5 @@
-const Api404Error = require('../Error_Handler/Api404Error.js');
-const listaDeDesejosRepositorio = require('../Repositorio/listaDeDesejosRepositorio.js');
+const Api404Error = require("../Error_Handler/Api404Error.js");
+const listaDeDesejosRepositorio = require("../Repositorio/listaDeDesejosRepositorio.js");
 
 class ListaDeDesejosController {
   async readAll(req, res, next) {
@@ -8,7 +8,7 @@ class ListaDeDesejosController {
       if (rows.length > 0) {
         res.status(200).send(rows);
       } else {
-        throw new Api404Error('nenhuma lista encontrada');
+        throw new Api404Error("nenhuma lista encontrada");
       }
     } catch (error) {
       next(error);
@@ -31,7 +31,7 @@ class ListaDeDesejosController {
   async create(req, res, next) {
     try {
       const row = await listaDeDesejosRepositorio.insert(req.body);
-      res.status(200).send('lista de desejos criada com sucesso!');
+      res.status(200).send("lista de desejos criada com sucesso!");
     } catch (error) {
       next(error);
     }
@@ -44,7 +44,7 @@ class ListaDeDesejosController {
         req.params.id,
       );
       if (row[0] == 1) {
-        res.status(200).send('lista atualizada com sucesso');
+        res.status(200).send("lista atualizada com sucesso");
       } else {
         throw new Api404Error(`lista de id: ${req.params.id} não encontrada`);
       }
@@ -57,7 +57,7 @@ class ListaDeDesejosController {
     try {
       const row = await listaDeDesejosRepositorio.delete(req.params.id);
       if (row) {
-        res.status(200).send('lista excluida com sucesso');
+        res.status(200).send("lista excluida com sucesso");
       } else {
         throw new Api404Error(`lista de id: ${req.params.id} não encontrada`);
       }

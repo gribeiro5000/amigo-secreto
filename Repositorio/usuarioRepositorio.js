@@ -1,6 +1,6 @@
-const Api401Error = require('../Error_Handler/Api401Error.js');
-const Api500Error = require('../Error_Handler/Api500Error.js');
-const usuario = require('../Models/usuario.js');
+const Api401Error = require("../Error_Handler/Api401Error.js");
+const Api500Error = require("../Error_Handler/Api500Error.js");
+const usuario = require("../Models/usuario.js");
 
 class UsuarioRepositorio {
   getAll() {
@@ -17,7 +17,7 @@ class UsuarioRepositorio {
 
   getOne(id) {
     const response = usuario
-      .findOne({ where: { id: id } })
+      .findOne({where: {id: id}})
       .then((data) => {
         return data;
       })
@@ -30,7 +30,7 @@ class UsuarioRepositorio {
 
   getByEmail(email) {
     const response = usuario
-      .findOne({ where: { email: email } })
+      .findOne({where: {email: email}})
       .then((data) => {
         return data;
       })
@@ -55,8 +55,8 @@ class UsuarioRepositorio {
         return data;
       })
       .catch((err) => {
-        if (err.message == 'Validation error') {
-          throw new Api401Error('email já cadastrado');
+        if (err.message == "Validation error") {
+          throw new Api401Error("email já cadastrado");
         } else {
           throw new Api500Error(err);
         }
@@ -74,7 +74,7 @@ class UsuarioRepositorio {
     };
 
     const response = usuario
-      .update(updatedUsuario, { where: { id: id } })
+      .update(updatedUsuario, {where: {id: id}})
       .then((data) => {
         return data;
       })
@@ -87,7 +87,7 @@ class UsuarioRepositorio {
 
   deleteUser(id) {
     const response = usuario
-      .destroy({ where: { id: id } })
+      .destroy({where: {id: id}})
       .then((data) => {
         return data;
       })

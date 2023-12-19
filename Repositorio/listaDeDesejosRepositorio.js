@@ -1,5 +1,5 @@
-const ListaDeDesejos = require('../Models/listaDeDesejos.js');
-const Api500Error = require('../Error_Handler/Api500Error.js');
+const ListaDeDesejos = require("../Models/listaDeDesejos.js");
+const Api500Error = require("../Error_Handler/Api500Error.js");
 
 class ListaDeDesejosRepositorio {
   getAll() {

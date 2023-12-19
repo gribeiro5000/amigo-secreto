@@ -1,6 +1,6 @@
-const httpStatusCode = require('../Error_Handler/httpStatusCode.js');
-const express = require('express');
-const Api400Error = require('./Api400Error.js');
+const httpStatusCode = require("../Error_Handler/httpStatusCode.js");
+const express = require("express");
+const Api400Error = require("./Api400Error.js");
 const app = express();
 
 const verificaCamposMiddleware =

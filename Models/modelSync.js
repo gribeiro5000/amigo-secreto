@@ -1,4 +1,4 @@
-const sequelize = require('../Database/connection');
+const sequelize = require("../Database/connection");
 
 function modelSync() {
   sequelize.sync();

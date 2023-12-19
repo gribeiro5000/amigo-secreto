@@ -1,8 +1,8 @@
-const sequelize = require('../Database/connection.js');
-const dataTypes = require('sequelize');
-const Usuario = require('./usuario.js');
+const sequelize = require("../Database/connection.js");
+const dataTypes = require("sequelize");
+const Usuario = require("./usuario.js");
 
-const ListaDeDesejos = sequelize.define('listaDeDesejos', {
+const ListaDeDesejos = sequelize.define("listaDeDesejos", {
   id: {
     type: dataTypes.INTEGER,
     autoIncrement: true,

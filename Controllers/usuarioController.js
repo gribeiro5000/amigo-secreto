@@ -1,9 +1,9 @@
-const UsuarioRepositorio = require('../Repositorio/usuarioRepositorio.js');
-const Api404Error = require('../Error_Handler/Api404Error.js');
-const bcrypt = require('bcryptjs');
-const Api401Error = require('../Error_Handler/Api401Error.js');
-const jwt = require('jsonwebtoken');
-const httpStatusCode = require('../Error_Handler/httpStatusCode.js');
+const UsuarioRepositorio = require("../Repositorio/usuarioRepositorio.js");
+const Api404Error = require("../Error_Handler/Api404Error.js");
+const bcrypt = require("bcryptjs");
+const Api401Error = require("../Error_Handler/Api401Error.js");
+const jwt = require("jsonwebtoken");
+const httpStatusCode = require("../Error_Handler/httpStatusCode.js");
 
 class UsuarioController {
   async readAll(req, res, next) {
@@ -12,7 +12,7 @@ class UsuarioController {
       if (rows.length > 0) {
         res.status(200).send(rows);
       } else {
-        throw new Api404Error('usuários não encontrado');
+        throw new Api404Error("usuários não encontrado");
       }
     } catch (error) {
       next(error);
@@ -25,7 +25,7 @@ class UsuarioController {
       if (rows) {
         res.status(200).send(rows);
       } else {
-        throw new Api404Error('Usuário não encontrado');
+        throw new Api404Error("Usuário não encontrado");
       }
     } catch (error) {
       next(error);
@@ -47,9 +47,9 @@ class UsuarioController {
       req.body.senha = bcrypt.hashSync(req.body.senha);
       const row = await UsuarioRepositorio.updateUser(req.body, req.params.id);
       if (row[0] == 1) {
-        res.status(404).send('Usuario atualizado com sucesso!');
+        res.status(404).send("Usuario atualizado com sucesso!");
       } else {
-        throw new Api404Error('Usuário não encontrado');
+        throw new Api404Error("Usuário não encontrado");
       }
     } catch (error) {
       next(error);
@@ -60,9 +60,9 @@ class UsuarioController {
     try {
       const row = await UsuarioRepositorio.deleteUser(req.params.id);
       if (row) {
-        res.status(200).send('Usuário deletado com sucesso');
+        res.status(200).send("Usuário deletado com sucesso");
       } else {
-        throw new Api404Error('usuário não encontrado');
+        throw new Api404Error("usuário não encontrado");
       }
     } catch (error) {
       next(error);
@@ -76,18 +76,18 @@ class UsuarioController {
       if (veriEmail) {
         let senha = await bcrypt.compare(req.body.senha, veriEmail.senha);
         if (!senha) {
-          throw new Api401Error('email ou senha inválidos');
+          throw new Api401Error("email ou senha inválidos");
         } else {
-          let token = jwt.sign({ id: veriEmail.id }, process.env.TOKEN_SECRET, {
-            expiresIn: '1h',
+          let token = jwt.sign({id: veriEmail.id}, process.env.TOKEN_SECRET, {
+            expiresIn: "1h",
           });
           res
             .status(200)
-            .header({ 'authorization-token': token, id: veriEmail.id })
-            .send('logado');
+            .header({"authorization-token": token, id: veriEmail.id})
+            .send("logado");
         }
       } else {
-        throw new Api401Error('email ou senha inválidos');
+        throw new Api401Error("email ou senha inválidos");
       }
     } catch (error) {
       next(error);

@@ -1,5 +1,5 @@
-const grupoRepositorio = require('../Repositorio/grupoRepositorio');
-const Api404Error = require('../Error_Handler/Api404Error.js');
+const grupoRepositorio = require("../Repositorio/grupoRepositorio");
+const Api404Error = require("../Error_Handler/Api404Error.js");
 
 class GrupoController {
   async readAll(req, res, next) {
@@ -8,7 +8,7 @@ class GrupoController {
       if (rows.length > 0) {
         res.status(200).send(rows);
       } else {
-        throw new Api404Error('nenhum grupo encontrado');
+        throw new Api404Error("nenhum grupo encontrado");
       }
     } catch (error) {
       next(error);
@@ -31,7 +31,7 @@ class GrupoController {
   async create(req, res, next) {
     try {
       const row = await grupoRepositorio.insert(req.body);
-      res.status(200).send('grupo criado com sucesso!');
+      res.status(200).send("grupo criado com sucesso!");
     } catch (error) {
       next(error);
     }
@@ -41,7 +41,7 @@ class GrupoController {
     try {
       const row = await grupoRepositorio.update(req.body, req.params.id);
       if (row[0] == 1) {
-        res.status(200).send('grupo atualizado com sucesso');
+        res.status(200).send("grupo atualizado com sucesso");
       } else {
         throw new Api404Error(`grupo do id: ${req.params.id} não encontrado`);
       }
@@ -54,7 +54,7 @@ class GrupoController {
     try {
       const row = await grupoRepositorio.delete(req.params.id);
       if (row) {
-        res.status(200).send('grupo excluído com sucesso');
+        res.status(200).send("grupo excluído com sucesso");
       } else {
         throw new Api404Error(`grupo do id: ${req.params.id} não encontrado`);
       }

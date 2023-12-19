@@ -1,5 +1,5 @@
-const Api500Error = require('../Error_Handler/Api500Error');
-const Grupo = require('../Models/grupos');
+const Api500Error = require("../Error_Handler/Api500Error");
+const Grupo = require("../Models/grupos");
 
 class GrupoRepositorio {
   getAll() {
@@ -68,7 +68,7 @@ class GrupoRepositorio {
       },
     })
       .then(() => {
-        return 'grupo deletado com sucesso';
+        return "grupo deletado com sucesso";
       })
       .catch((error) => {
         throw new Api500Error(error);

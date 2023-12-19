@@ -1,5 +1,5 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 async function createDatabase() {
   //ABRE CONEXÃO COM MYSQL SERVER
   const connection = await mysql.createConnection({
@@ -9,7 +9,7 @@ async function createDatabase() {
   });
 
   //cria banco de dados
-  await connection.execute('CREATE DATABASE IF NOT EXISTS amigoSecreto');
+  await connection.execute("CREATE DATABASE IF NOT EXISTS amigoSecreto");
 
   connection.end();
 }

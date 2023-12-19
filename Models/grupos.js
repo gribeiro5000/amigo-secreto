@@ -1,7 +1,7 @@
-const sequelize = require('../Database/connection.js');
-const dataTypes = require('sequelize');
+const sequelize = require("../Database/connection.js");
+const dataTypes = require("sequelize");
 
-const Grupo = sequelize.define('Grupo', {
+const Grupo = sequelize.define("Grupo", {
   id: {
     type: dataTypes.INTEGER,
     autoIncrement: true,

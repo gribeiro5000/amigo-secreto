@@ -1,8 +1,8 @@
-const Convidado = require('../Models/convidado.js');
-const usuarioRepositorio = require('../Repositorio/usuarioRepositorio.js');
-const grupoRepositorio = require('../Repositorio/grupoRepositorio.js');
-const Api404Error = require('../Error_Handler/Api404Error.js');
-const Api500Error = require('../Error_Handler/Api500Error.js');
+const Convidado = require("../Models/convidado.js");
+const usuarioRepositorio = require("../Repositorio/usuarioRepositorio.js");
+const grupoRepositorio = require("../Repositorio/grupoRepositorio.js");
+const Api404Error = require("../Error_Handler/Api404Error.js");
+const Api500Error = require("../Error_Handler/Api500Error.js");
 
 class ConvidadoRepositorio {
   getAll() {
@@ -69,7 +69,7 @@ class ConvidadoRepositorio {
       },
     })
       .then(() => {
-        return 'Convidado deletado com sucesso';
+        return "Convidado deletado com sucesso";
       })
       .catch((error) => {
         throw new Api500Error(error);
