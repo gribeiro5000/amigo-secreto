@@ -1,6 +1,6 @@
 const convidadoRepositorio = require("../Repositorio/convidadoRepositorio.js");
 const usuarioRepositorio = require("../Repositorio/usuarioRepositorio.js");
-const grupoRepositorio = require("../Repositorio/convidadoRepositorio.js");
+const grupoRepositorio = require("../Repositorio/grupoRepositorio.js");
 const Api404Error = require("../Error_Handler/Api404Error.js");
 
 class ConvidadoController {
@@ -51,6 +51,51 @@ class ConvidadoController {
           `convidado do id: ${req.params.id} não encontrado`,
         );
       }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async sorteio(req, res, next) {
+    try {
+      //busca todos os convidados no banco
+      const rows = await convidadoRepositorio.getByGrupoId(req.params.grupoId);
+
+      if (rows.length == 1) {
+        res.status(401).send("Esse grupo não tem convidados o suficiente");
+      }
+
+      //embaralha lista de convidados
+      for (let i = rows.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = rows[i];
+        rows[i] = rows[j];
+        rows[j] = temp;
+      }
+
+      //amigo secreto será o próximo convidado da lista, o amigo do último será o primeiro da lista
+      for (let i = 0; i < rows.length; i++) {
+        if (i == rows.length - 1) {
+          rows[i].amigoSecretoId = rows[0].UsuarioId;
+        } else {
+          rows[i].amigoSecretoId = rows[i + 1].UsuarioId;
+        }
+      }
+
+      //salva sorteio no banco
+      for (let i = 0; i < rows.length; i++) {
+        await convidadoRepositorio.update(
+          {amigoSecretoId: rows[i].amigoSecretoId},
+          rows[i].id,
+        );
+      }
+
+      const row = await grupoRepositorio.update(
+        {sorteado: true},
+        rows[0].GrupoId,
+      );
+
+      res.status(200).send("Sorteio feito com sucesso");
     } catch (error) {
       next(error);
     }

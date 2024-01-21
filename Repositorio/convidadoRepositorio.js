@@ -31,10 +31,26 @@ class ConvidadoRepositorio {
     return response;
   }
 
+  getByGrupoId(grupoId) {
+    const response = Convidado.findAll({
+      where: {
+        GrupoId: grupoId,
+      },
+    })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        throw new Api500Error(error);
+      });
+    return response;
+  }
+
   insert(data) {
     const response = Convidado.create({
       UsuarioId: data.UsuarioId,
       GrupoId: data.GrupoId,
+      adm: data.adm,
     })
       .then((response) => {
         console.log(response);

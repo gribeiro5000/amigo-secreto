@@ -9,6 +9,13 @@ const Convidado = sequelize.define("Convidado", {
     primaryKey: true,
     autoIncrement: true,
   },
+  adm: {
+    type: dataTypes.BOOLEAN,
+    allowNull: false,
+  },
+  amigoSecretoId: {
+    type: dataTypes.INTEGER,
+  },
 });
 
 Convidado.belongsTo(Usuario);

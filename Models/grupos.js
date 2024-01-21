@@ -26,6 +26,9 @@ const Grupo = sequelize.define("Grupo", {
   observacao: {
     type: dataTypes.STRING(255),
   },
+  sorteado: {
+    type: dataTypes.BOOLEAN,
+  },
 });
 
 module.exports = Grupo;

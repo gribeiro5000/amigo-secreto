@@ -11,6 +11,7 @@ convidadoRouter.post(
   convidadoController.create,
 );
 convidadoRouter.put("/convidado/:id", convidadoController.update);
+convidadoRouter.put("/sorteio/:grupoId", convidadoController.sorteio);
 convidadoRouter.delete("/convidado/:id", convidadoController.delete);
 
 module.exports = convidadoRouter;
