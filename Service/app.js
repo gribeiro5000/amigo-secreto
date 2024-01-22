@@ -8,8 +8,10 @@ const listaDeDesejosRouter = require("../Routes/listaDeDesejosRoutes.js");
 const convidadoRouter = require("../Routes/convidadoRouter.js");
 const loginRouter = require("../Routes/loginRouter.js");
 const authorization = require("../Auth/autenticacao.js");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 createDatabase().then(() => {
   modelSync();
