@@ -9,14 +9,20 @@ const convidadoRouter = require("../Routes/convidadoRouter.js");
 const loginRouter = require("../Routes/loginRouter.js");
 const authorization = require("../Auth/autenticacao.js");
 const cors = require("cors");
+require("dotenv").config();
 
 app.use(express.json());
-app.use(cors());
 
 createDatabase().then(() => {
   modelSync();
 });
 
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL,
+    methods: "GET, POST, PUT, DELETE",
+  }),
+);
 app.use(loginRouter);
 app.use(usuarioRouter);
 app.use(grupoRouter);
