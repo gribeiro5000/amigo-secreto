@@ -1,12 +1,23 @@
 const grupoRepositorio = require("../Repositorio/grupoRepositorio");
 const Api404Error = require("../Error_Handler/Api404Error.js");
+const convidadoRepositorio = require("../Repositorio/convidadoRepositorio.js");
+const Api401Error = require("../Error_Handler/Api401Error.js");
 
 class GrupoController {
   async readAll(req, res, next) {
     try {
-      const rows = await grupoRepositorio.getAll();
-      if (rows.length > 0) {
-        res.status(200).send(rows);
+      const gruposConvidado = await convidadoRepositorio.getByUserId(
+        req.params.id,
+      );
+      if (gruposConvidado.length < 1) {
+        throw new Api404Error("Nenhum grupo encontrado");
+      }
+      const grupos = [];
+      for (let i = 0; i < gruposConvidado.length; i++) {
+        grupos.push(await grupoRepositorio.get(gruposConvidado[i].GrupoId));
+      }
+      if (grupos.length > 0) {
+        res.status(200).send(grupos);
       } else {
         throw new Api404Error("nenhum grupo encontrado");
       }
@@ -17,7 +28,7 @@ class GrupoController {
 
   async readOne(req, res, next) {
     try {
-      const row = await grupoRepositorio.get(req.params.id);
+      const row = await grupoRepositorio.get(req.params.grupoId);
       if (row) {
         res.status(200).send(row);
       } else {
