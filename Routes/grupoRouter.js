@@ -11,14 +11,31 @@ grupoRouter.get(
   Auth.permissao,
   GrupoController.readAll,
 );
-grupoRouter.get("/grupo/:grupoId", Auth.autenticacao, GrupoController.readOne);
+grupoRouter.get(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  GrupoController.readOne,
+);
 grupoRouter.post(
   "/grupo",
   Auth.autenticacao,
   verificaCamposMiddleware("nome"),
   GrupoController.create,
 );
-grupoRouter.put("/grupo/:id", Auth.autenticacao, GrupoController.update);
-grupoRouter.delete("/grupo/:id", Auth.autenticacao, grupoController.delete);
+grupoRouter.put(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  Auth.isAdm,
+  GrupoController.update,
+);
+grupoRouter.delete(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  Auth.isAdm,
+  grupoController.delete,
+);
 
 module.exports = grupoRouter;

@@ -107,6 +107,21 @@ class ConvidadoRepositorio {
       });
     return response;
   }
+
+  deleteByGrupoId(grupoId) {
+    const response = Convidado.destroy({
+      where: {
+        GrupoId: grupoId,
+      },
+    })
+      .then(() => {
+        return "Convidado deletado com sucesso";
+      })
+      .catch((error) => {
+        throw new Api500Error(error);
+      });
+    return response;
+  }
 }
 
 module.exports = new ConvidadoRepositorio();

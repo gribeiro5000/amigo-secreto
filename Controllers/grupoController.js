@@ -2,6 +2,7 @@ const grupoRepositorio = require("../Repositorio/grupoRepositorio");
 const Api404Error = require("../Error_Handler/Api404Error.js");
 const convidadoRepositorio = require("../Repositorio/convidadoRepositorio.js");
 const Api401Error = require("../Error_Handler/Api401Error.js");
+const Auth = require("../Auth/autenticacao.js");
 
 class GrupoController {
   async readAll(req, res, next) {
@@ -32,7 +33,9 @@ class GrupoController {
       if (row) {
         res.status(200).send(row);
       } else {
-        throw new Api404Error(`grupo do id: ${req.params.id} não encontrado`);
+        throw new Api404Error(
+          `grupo do id: ${req.params.grupoId} não encontrado`,
+        );
       }
     } catch (error) {
       next(error);
@@ -50,11 +53,13 @@ class GrupoController {
 
   async update(req, res, next) {
     try {
-      const row = await grupoRepositorio.update(req.body, req.params.id);
+      const row = await grupoRepositorio.update(req.body, req.params.grupoId);
       if (row[0] == 1) {
         res.status(200).send("grupo atualizado com sucesso");
       } else {
-        throw new Api404Error(`grupo do id: ${req.params.id} não encontrado`);
+        throw new Api404Error(
+          `grupo do id: ${req.params.grupoId} não encontrado`,
+        );
       }
     } catch (error) {
       next(error);
@@ -63,11 +68,14 @@ class GrupoController {
 
   async delete(req, res, next) {
     try {
-      const row = await grupoRepositorio.delete(req.params.id);
+      await convidadoRepositorio.deleteByGrupoId(req.params.grupoId);
+      const row = await grupoRepositorio.delete(req.params.grupoId);
       if (row) {
         res.status(200).send("grupo excluído com sucesso");
       } else {
-        throw new Api404Error(`grupo do id: ${req.params.id} não encontrado`);
+        throw new Api404Error(
+          `grupo do id: ${req.params.grupoId} não encontrado`,
+        );
       }
     } catch (error) {
       next(error);
