@@ -7,6 +7,8 @@ const Auth = require("../Auth/autenticacao.js");
 //listaDeDesejosRouter.get("/listadedesejos", listaDeDesejosController.readAll);
 listaDeDesejosRouter.get(
   "/listadedesejos/:id",
+  Auth.autenticacao,
+  Auth.proprietarioListaDeDesejos,
   listaDeDesejosController.readOne,
 );
 //listaDeDesejosRouter.post(
