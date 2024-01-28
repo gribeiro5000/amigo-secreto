@@ -3,15 +3,39 @@ const grupoRouter = express.Router();
 const GrupoController = require("../Controllers/grupoController.js");
 const grupoController = require("../Controllers/grupoController.js");
 const verificaCamposMiddleware = require("../Error_Handler/verificaCamposMiddleware.js");
+const Auth = require("../Auth/autenticacao.js");
 
-grupoRouter.get("/grupo", GrupoController.readAll);
-grupoRouter.get("/grupo/:id", GrupoController.readOne);
+grupoRouter.get(
+  "/grupos/:id",
+  Auth.autenticacao,
+  Auth.permissao,
+  GrupoController.readAll,
+);
+grupoRouter.get(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  GrupoController.readOne,
+);
 grupoRouter.post(
   "/grupo",
+  Auth.autenticacao,
   verificaCamposMiddleware("nome"),
   GrupoController.create,
 );
-grupoRouter.put("/grupo/:id", GrupoController.update);
-grupoRouter.delete("/grupo/:id", grupoController.delete);
+grupoRouter.put(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  Auth.isAdm,
+  GrupoController.update,
+);
+grupoRouter.delete(
+  "/grupo/:grupoId",
+  Auth.autenticacao,
+  Auth.pertenceAoGrupo,
+  Auth.isAdm,
+  grupoController.delete,
+);
 
 module.exports = grupoRouter;

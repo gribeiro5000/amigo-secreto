@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Api500Error = require("../Error_Handler/Api500Error");
+const Api401Error = require("../Error_Handler/Api401Error");
+const convidadoRepositorio = require("../Repositorio/convidadoRepositorio");
 require("dotenv").config();
 
 class Auth {
@@ -24,6 +26,41 @@ class Auth {
       next();
     } else {
       res.send("Esse usuário não pode acessar essa rota");
+    }
+  }
+
+  async pertenceAoGrupo(req, res, next) {
+    try {
+      const convidado = await convidadoRepositorio.getByGrupoId(
+        req.params.grupoId,
+      );
+      let result = false;
+      for (let i = 0; i < convidado.length; i++) {
+        if (convidado[i].UsuarioId == req.id) {
+          req.convidado = convidado[i];
+          result = true;
+          break;
+        }
+      }
+      if (result) {
+        next();
+      } else {
+        throw new Api401Error(`O usuário não pertence a este grupo`);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  isAdm(req, res, next) {
+    try {
+      if (req.convidado.adm) {
+        next();
+      } else {
+        throw new Api401Error(`Este usuário não é adm`);
+      }
+    } catch (error) {
+      next(error);
     }
   }
 }

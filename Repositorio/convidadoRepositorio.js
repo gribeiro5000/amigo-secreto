@@ -46,6 +46,21 @@ class ConvidadoRepositorio {
     return response;
   }
 
+  getByUserId(userId) {
+    const response = Convidado.findAll({
+      where: {
+        UsuarioId: userId,
+      },
+    })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        throw new Api500Error(error);
+      });
+    return response;
+  }
+
   insert(data) {
     const response = Convidado.create({
       UsuarioId: data.UsuarioId,
@@ -82,6 +97,21 @@ class ConvidadoRepositorio {
     const response = Convidado.destroy({
       where: {
         id: id,
+      },
+    })
+      .then(() => {
+        return "Convidado deletado com sucesso";
+      })
+      .catch((error) => {
+        throw new Api500Error(error);
+      });
+    return response;
+  }
+
+  deleteByGrupoId(grupoId) {
+    const response = Convidado.destroy({
+      where: {
+        GrupoId: grupoId,
       },
     })
       .then(() => {

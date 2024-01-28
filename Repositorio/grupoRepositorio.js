@@ -2,7 +2,7 @@ const Api500Error = require("../Error_Handler/Api500Error");
 const Grupo = require("../Models/grupos");
 
 class GrupoRepositorio {
-  getAll() {
+  getByUserId(userId) {
     const response = Grupo.findAll()
       .then((data) => {
         return data;
