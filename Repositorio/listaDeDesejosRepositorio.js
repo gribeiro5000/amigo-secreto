@@ -33,6 +33,8 @@ class ListaDeDesejosRepositorio {
       nome: data.nome,
       precoEstimado: data.precoEstimado,
       UsuarioId: data.UsuarioId,
+      link: data.link,
+      GrupoId: data.GrupoId,
     })
       .then((result) => {
         return result;

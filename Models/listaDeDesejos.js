@@ -1,6 +1,7 @@
 const sequelize = require("../Database/connection.js");
 const dataTypes = require("sequelize");
 const Usuario = require("./usuario.js");
+const Grupo = require("./grupos.js");
 
 const ListaDeDesejos = sequelize.define("listaDeDesejos", {
   id: {
@@ -15,8 +16,12 @@ const ListaDeDesejos = sequelize.define("listaDeDesejos", {
   precoEstimado: {
     type: dataTypes.FLOAT,
   },
+  link: {
+    type: dataTypes.STRING(255),
+  },
 });
 
 ListaDeDesejos.belongsTo(Usuario);
+ListaDeDesejos.belongsTo(Grupo);
 
 module.exports = ListaDeDesejos;
