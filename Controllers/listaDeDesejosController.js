@@ -48,7 +48,7 @@ class ListaDeDesejosController {
       } else {
         throw new Api404Error(`lista de id: ${req.params.id} não encontrada`);
       }
-    } catch (erro) {
+    } catch (error) {
       next(error);
     }
   }

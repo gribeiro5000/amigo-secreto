@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const Api500Error = require("../Error_Handler/Api500Error");
 const Api401Error = require("../Error_Handler/Api401Error");
 const convidadoRepositorio = require("../Repositorio/convidadoRepositorio");
+const listaDeDesejosRepositorio = require("../Repositorio/listaDeDesejosRepositorio");
 require("dotenv").config();
 
 class Auth {
@@ -46,6 +47,21 @@ class Auth {
         next();
       } else {
         throw new Api401Error(`O usuário não pertence a este grupo`);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async proprietarioListaDeDesejos(req, res, next) {
+    try {
+      const row = await listaDeDesejosRepositorio.get(req.params.id);
+      if (row.UsuarioId == req.id) {
+        next();
+      } else {
+        throw new Api401Error(
+          `Essa lista de desejos não pertence a esse usuário`,
+        );
       }
     } catch (error) {
       next(error);

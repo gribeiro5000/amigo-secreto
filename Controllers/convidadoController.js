@@ -2,6 +2,7 @@ const convidadoRepositorio = require("../Repositorio/convidadoRepositorio.js");
 const usuarioRepositorio = require("../Repositorio/usuarioRepositorio.js");
 const grupoRepositorio = require("../Repositorio/grupoRepositorio.js");
 const Api404Error = require("../Error_Handler/Api404Error.js");
+const Api401Error = require("../Error_Handler/Api401Error.js");
 
 class ConvidadoController {
   async readAll(req, res, next) {
@@ -19,12 +20,16 @@ class ConvidadoController {
 
   async readOne(req, res, next) {
     try {
-      const row = await convidadoRepositorio.get(req.params.id);
+      const row = await convidadoRepositorio.get(req.params.convidadoId);
       if (row) {
-        res.status(200).send(row);
+        if (row.UsuarioId == req.id) {
+          res.status(200).send(row);
+        } else {
+          throw new Api401Error(`Este usuário não pode acessar essa rota`);
+        }
       } else {
         throw new Api404Error(
-          `convidado do id: ${req.params.id} não encontrado`,
+          `convidado do id: ${req.params.convidadoId} não encontrado`,
         );
       }
     } catch (error) {
@@ -103,12 +108,16 @@ class ConvidadoController {
 
   async delete(req, res, next) {
     try {
-      const row = await convidadoRepositorio.delete(req.params.id);
+      const row = await convidadoRepositorio.delete(req.params.convidadoId);
       if (row) {
-        res.status(200).send("convidado excluído com sucesso");
+        if (row.adm) {
+          res.status(200).send("convidado excluído com sucesso");
+        } else {
+          throw new Api401Error(`Esse usuário não é adm`);
+        }
       } else {
         throw new Api404Error(
-          `convidado do id: ${req.params.id} não encontrado`,
+          `convidado do id: ${req.params.convidadoId} não encontrado`,
         );
       }
     } catch (error) {
